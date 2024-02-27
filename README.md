@@ -1,7 +1,12 @@
 # Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation[CVPR2024]
 
-We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. We will release the code as soon as possible.
+We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. 
 
+### News
+
+* **` Feb. 27nd, 2024`:** We released our paper on Arxiv. Further details can be found in code and our updated [arXiv]().
+  
+* Code will be available very soon.
 
 ## Overview
 
@@ -19,10 +24,5 @@ Semantic performance on VOC and COCO. logs and weights will be public soon.
 |   VOC   |   ViT-B  | 74.0  | 73.9 |     |        |
 |   COCO  |   ViT-B  |  46.7 |   -  |     |        |
 
-### News
-
-* **` Feb. 27nd, 2024`:** We released our paper on Arxiv. Further details can be found in code and our updated [arXiv]().
-  
-* Code will be available very soon.
 
 If you have any question, please feel free to contact the author by zwyang21@m.fudan.edu.cn.
