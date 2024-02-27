@@ -2,7 +2,7 @@
 
 We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. 
 
-### News
+## News
 
 * **` Feb. 27nd, 2024`:** We released our paper on Arxiv. Further details can be found in code and our updated [arXiv]().
   
