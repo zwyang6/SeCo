@@ -1,4 +1,4 @@
-# Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation[CVPR2024]
+# [CVPR2024] Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation
 
 We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. 
 
