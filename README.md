@@ -29,5 +29,5 @@ Semantic performance on VOC and COCO. logs and weights will be public soon.
 If you have any question, please feel free to contact the author by zwyang21@m.fudan.edu.cn.
 
 ## Acknowledgement
-This repo is built upon [ToCo](https://github.com/rulixiang/ToCo),[DINO](https://github.com/facebookresearch/dino), and[PiCO](https://github.com/hbzju/PiCO.git).
+This repo is built upon [ToCo](https://github.com/rulixiang/ToCo), [DINO](https://github.com/facebookresearch/dino), and [PiCO](https://github.com/hbzju/PiCO.git).
 Many thanks to their brilliant works! 
