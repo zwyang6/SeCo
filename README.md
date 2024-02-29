@@ -6,7 +6,7 @@ We proposed a Separate and Conquer philosophy to effectively tackle the co-occur
 
 * **` Feb. 27nd, 2024`:** We released our paper on Arxiv. Further details can be found in code and our updated [arXiv]().
   
-* Code will be available very soon.
+* Code will be available very soon. Please give us a :star2: to receive the updation !
 
 ## Overview
 
