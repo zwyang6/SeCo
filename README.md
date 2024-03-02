@@ -4,10 +4,11 @@ We proposed a Separate and Conquer philosophy to effectively tackle the co-occur
 
 ## News
 
+* **If you find this work helpful, please give us a :star2: to receive the updation !**
 * **` Feb. 29th, 2024`:** We released our paper on Arxiv. Further details can be found in the updated [arXiv](http://arxiv.org/abs/2402.18467).
   
 * **` Mar. 1st, 2024`:**  Code for PASCAL VOC is available now.
-* **If you find this work helpful, please give us a :star2: to receive the updation !**
+* **` Mar. 2st, 2024`:**  Logs and weights are available now.
 
 ## Overview
 
