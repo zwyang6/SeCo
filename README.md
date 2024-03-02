@@ -89,10 +89,10 @@ bash run_evaluate_seg_voc.sh tools/infer_seg_coco.py [gpu_device] [checkpoint_pa
 
 ## Main Results
 Semantic performance on VOC and COCO. logs and weights will be public soon.
-| Dataset | Backbone |  val  | test | log | weight |
+| Dataset | Backbone |  Val  | Test | Log | Weight |
 |:-------:|:--------:|:-----:|:----:|:---:|:------:|
-|   VOC   |   ViT-B  | 74.0  | 73.8 |     |        |
-|   COCO  |   ViT-B  |  46.7 |   -  |     |        |
+|   VOC   |   ViT-B  | 74.0  | 73.8 | [log](https://drive.google.com/file/d/1C84BBbj7_vHVFL_tS0wFk3TdU-PfLdlp/view?usp=sharing) | [weight](https://drive.google.com/file/d/1m5Yezcs1EPUuyJq1U_W0WuyPNj2Me4wT/view?usp=sharing)       |
+|   COCO  |   ViT-B  |  46.7 |   -  | [log](https://drive.google.com/file/d/1eBx9ESGa-pZI8sK41auXYfZsywTS3r5I/view?usp=sharing) | [weight](https://drive.google.com/file/d/1XpazzVBmSMwFsa7ei_Av22PGKA7pq7V0/view?usp=sharing)       |
 
 ## Citation 
 Please cite our work if you find it helpful to your reseach. :two_hearts:
