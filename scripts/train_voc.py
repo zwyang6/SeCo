@@ -9,6 +9,9 @@ import numpy as np
 import torch
 import torch.distributed as dist
 import torch.nn.functional as F
+from datasets import voc
+from torch.utils.data import DataLoader
+from torch.utils.data.distributed import DistributedSampler
 from model.losses import (get_masked_ptc_loss, get_seg_loss, get_energy_loss, 
                         LIG_Loss, LIL_Loss, DenseEnergyLoss)
 from torch.nn.parallel import DistributedDataParallel
@@ -17,7 +20,7 @@ from utils import imutils,evaluate
 from utils.camutils import (cam_to_label, multi_scale_cam2, label_to_aff_mask, 
                             refine_cams_with_bkg_v2, assign_csc_tags, cam_to_roi_mask)
 from utils.pyutils import AverageMeter, cal_eta, setup_logger
-from engine import build_dataloader, build_network, build_optimizer, build_validation
+from engine import build_network, build_optimizer, build_validation
 parser = argparse.ArgumentParser()
 torch.hub.set_dir("./pretrained")
 
@@ -30,7 +33,7 @@ parser.add_argument("--w_reg", default=0.05, type=float, help="w_reg")
 
 ### training utils
 parser.add_argument("--max_iters", default=20000, type=int, help="max training iters")
-parser.add_argument("--log_iters", default=100, type=int, help=" logging iters")
+parser.add_argument("--log_iters", default=200, type=int, help=" logging iters")
 parser.add_argument("--eval_iters", default=2000, type=int, help="validation iters")
 parser.add_argument("--warmup_iters", default=1500, type=int, help="warmup_iters")
 parser.add_argument("--update_prototype", default=600, type=int, help="begin to update prototypes")
@@ -108,15 +111,56 @@ def train(args=None):
     time0 = time0.replace(microsecond=0)
     device = torch.device(args.local_rank)
 
-    train_loader, train_sampler, val_loader = build_dataloader(args)
-    train_sampler.set_epoch(np.random.randint(args.max_iters))
-    train_loader_iter = iter(train_loader)
-    avg_meter = AverageMeter()
-
+    ### build model 
     model, param_groups = build_network(args)
     model.to(device)
     model = DistributedDataParallel(model, device_ids=[args.local_rank], find_unused_parameters=True)
 
+    ### build dataloader 
+    train_dataset = voc.VOC12ClsDataset(
+        root_dir=args.data_folder,
+        name_list_dir=args.list_folder,
+        split=args.train_set,
+        stage='train',
+        aug=True,
+        rescale_range=args.scales,
+        crop_size=args.crop_size,
+        img_fliplr=True,
+        ignore_index=args.ignore_index,
+        num_classes=args.num_classes,
+    )
+
+    val_dataset = voc.VOC12SegDataset(
+        root_dir=args.data_folder,
+        name_list_dir=args.list_folder,
+        split=args.val_set,
+        stage='val',
+        aug=False,
+        ignore_index=args.ignore_index,
+        num_classes=args.num_classes,
+    )
+
+    train_sampler = DistributedSampler(train_dataset, shuffle=True)
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=args.spg,
+        num_workers=args.num_workers,
+        pin_memory=False,
+        drop_last=True,
+        sampler=train_sampler,
+        prefetch_factor=4)
+
+    val_loader = DataLoader(val_dataset,
+                            batch_size=1,
+                            shuffle=False,
+                            num_workers=args.num_workers,
+                            pin_memory=False,
+                            drop_last=False)
+    train_sampler.set_epoch(np.random.randint(args.max_iters))
+    train_loader_iter = iter(train_loader)
+    avg_meter = AverageMeter()
+
+    ### build optimizer 
     optim = build_optimizer(args,param_groups)
     logging.info('\nOptimizer: \n%s' % optim)
 
@@ -126,7 +170,6 @@ def train(args=None):
     par = PAR(num_iter=10, dilations=[1,2,4,8,12,24]).cuda()
 
     for n_iter in range(args.max_iters):
-        global_step = n_iter + 1
         try:
             img_name, inputs, cls_label, label_idx, img_box, raw_image, w_image, s_image = next(train_loader_iter)
         except:
