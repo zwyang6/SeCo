@@ -94,6 +94,17 @@ Semantic performance on VOC and COCO. logs and weights will be public soon.
 |   VOC   |   ViT-B  | 74.0  | 73.8 |     |        |
 |   COCO  |   ViT-B  |  46.7 |   -  |     |        |
 
+## Citation 
+Please cite our work if you find it helpful to your reseach. :two_hearts:
+```bash
+@article{yang2024separate,
+  title={Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation},
+  author={Yang, Zhiwei and Fu, Kexue and Duan, Minghong and Qu, Linhao and Wang, Shuo and Song, Zhijian},
+  journal={arXiv preprint arXiv:2402.18467},
+  year={2024}
+}
+```
+
 
 If you have any question, please feel free to contact the author by zwyang21@m.fudan.edu.cn.
 
