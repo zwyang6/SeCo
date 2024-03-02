@@ -1,4 +1,1 @@
-from .deit import deit_base_distilled_patch16_224, deit_base_distilled_patch16_384, deit_small_distilled_patch16_224, deit_tiny_distilled_patch16_224
-from .deit import deit_base_patch16_384, deit_base_patch16_224, deit_small_patch16_224, deit_tiny_patch16_224
 from .vit import vit_base_patch16_384, vit_base_patch16_224, vit_small_patch16_224, vit_large_patch16_224, vit_large_patch16_384
-from .mct_vit_mask import mctvit_mask_base_patch16_224
