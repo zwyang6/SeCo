@@ -78,12 +78,12 @@ bash run_voc.sh scripts/train_voc.py [master_port] [gpu_device] train_voc
 bash run_coco.sh scripts/train_coco.py [master_port] [gpu_devices] train_coco
 ```
 
-## Train SeCo
+## Evaluate SeCo
 ``` bash
 ### eval voc
 bash run_evaluate_seg_voc.sh tools/infer_seg_voc.py [gpu_device] [checkpoint_path]
 
-### train coco
+### eval coco
 bash run_evaluate_seg_voc.sh tools/infer_seg_coco.py [gpu_device] [checkpoint_path]
 ```
 
