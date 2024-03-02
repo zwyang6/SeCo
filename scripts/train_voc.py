@@ -17,10 +17,8 @@ from utils import imutils,evaluate
 from utils.camutils import (cam_to_label, multi_scale_cam2, label_to_aff_mask, 
                             refine_cams_with_bkg_v2, assign_csc_tags, cam_to_roi_mask)
 from utils.pyutils import AverageMeter, cal_eta, setup_logger
-from utils.tbutils import make_grid_image, make_grid_label
 from engine import build_dataloader, build_network, build_optimizer, build_validation
 parser = argparse.ArgumentParser()
-from torch.utils.tensorboard import SummaryWriter
 torch.hub.set_dir("./pretrained")
 
 ### loss weight
@@ -61,7 +59,6 @@ parser.add_argument("--aux_layer", default=-3, type=int, help="aux_layer")
 
 ### log utils
 parser.add_argument("--pretrained", default=True, type=bool, help="use imagenet pretrained weights")
-parser.add_argument("--tensorboard", default=True, type=bool, help="log tb")
 parser.add_argument("--save_ckpt", default=False, action="store_true", help="save_ckpt")
 parser.add_argument("--seed", default=0, type=int, help="fix random seed")
 parser.add_argument("--work_dir", default="w_outputs", type=str, help="w_outputs")
@@ -106,9 +103,6 @@ def train(args=None):
     torch.cuda.set_device(args.local_rank)
     dist.init_process_group(backend=args.backend, )
     logging.info("Total gpus: %d, samples per gpu: %d..."%(dist.get_world_size(), args.spg))
-
-    if args.local_rank == 0 and args.tensorboard == True:
-        tb_logger = SummaryWriter(log_dir=args.tb_dir)
 
     time0 = datetime.datetime.now()
     time0 = time0.replace(microsecond=0)
@@ -211,17 +205,6 @@ def train(args=None):
             if args.local_rank == 0:
                 logging.info("Iter: %d; Elasped: %s; ETA: %s; LR: %.3e; cls_loss: %.4f, cls_loss_aux: %.4f, ptc_loss: %.4f, lig_loss: %.4f, lil_loss: %.4f, seg_loss: %.4f..." % (n_iter + 1, delta, eta, cur_lr, \
                                                         avg_meter.pop('cls_loss'), avg_meter.pop('cls_loss_aux'), avg_meter.pop('ptc_loss'), avg_meter.pop('lig_loss'),avg_meter.pop('lil_loss'), avg_meter.pop('seg_loss')))
-                if tb_logger is not None:
-
-                    grid_img1, grid_cam1 = make_grid_image(inputs.detach(), cams.detach(), cls_label.detach())
-                    _, grid_cam_aux = make_grid_image(inputs.detach(), cams_aux.detach(), cls_label.detach())
-                    grid_seg_gt1 = make_grid_label(refined_pseudo_label.detach())
-                    grid_seg_pred = make_grid_label(torch.argmax(segs.detach(), dim=1))
-                    tb_logger.add_image("visual/img1", grid_img1, global_step=global_step)
-                    tb_logger.add_image("visual/cam1", grid_cam1, global_step=global_step)
-                    tb_logger.add_image("visual/aux_cam", grid_cam_aux, global_step=global_step)
-                    tb_logger.add_image("visual/seg_gt1", grid_seg_gt1, global_step=global_step)
-                    tb_logger.add_image("visual/seg_pred", grid_seg_pred, global_step=global_step)
 
         if (n_iter + 1) % args.eval_iters == 0 and (n_iter + 1) >= 1:
             ckpt_name = os.path.join(args.ckpt_dir, "model_iter_%d.pth" % (n_iter + 1))
@@ -246,12 +229,10 @@ if __name__ == "__main__":
     args.work_dir = os.path.join(args.work_dir, timestamp_1, exp_tag)
     args.ckpt_dir = os.path.join(args.work_dir, "checkpoints")
     args.pred_dir = os.path.join(args.work_dir, "predictions")
-    args.tb_dir = os.path.join(args.work_dir, "tensorboards")
 
     if args.local_rank == 0:
         os.makedirs(args.ckpt_dir, exist_ok=True)
         os.makedirs(args.pred_dir, exist_ok=True)
-        os.makedirs(args.tb_dir, exist_ok=True)
 
         setup_logger(filename=os.path.join(args.work_dir, 'train.log'))
         logging.info('Pytorch version: %s' % torch.__version__)
