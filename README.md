@@ -69,6 +69,7 @@ COCO/
 ## Requirement
 
 Please refer to the requirements.txt. 
+
 We incorporate a regularization loss for segmentation. Please refer to the instruction for this [python extension](https://github.com/meng-tang/rloss/tree/master/pytorch#build-python-extension-module).
 
 ## Train SeCo
