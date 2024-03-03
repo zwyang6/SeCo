@@ -1,4 +1,5 @@
 name: seco
+
 dependencies:
   - numpy=1.21.5=py37h6c91a56_3
   - pydensecrf=1.0rc3=py37hfb7772e_2
