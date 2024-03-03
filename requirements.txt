@@ -1,0 +1,17 @@
+name: seco
+dependencies:
+  - numpy=1.21.5=py37h6c91a56_3
+  - pydensecrf=1.0rc3=py37hfb7772e_2
+  - python=3.7.16=h7a1cb2a_0
+  - pytorch=1.12.1=py3.7_cuda11.3_cudnn8.3.2_0
+  -pip
+  - einops==0.6.0
+  - imageio==2.26.0
+  - matplotlib==3.5.3
+  - mmcv==1.7.1
+  - scikit-image==0.19.3
+  - scikit-learn==1.0.2
+  - tensorboard==2.11.2
+  - texttable==1.6.7
+  - timm==0.6.12
+  - tqdm==4.65.0
