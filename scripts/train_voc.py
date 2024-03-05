@@ -68,7 +68,7 @@ parser.add_argument("--work_dir", default="w_outputs", type=str, help="w_outputs
 parser.add_argument("--log_tag", default="train_voc", type=str, help="train_voc")
 
 ### dataset utils
-parser.add_argument("--data_folder", default='/data/ziqing/Jaye_Files/Dataset/VOC2012', type=str, help="dataset folder")
+parser.add_argument("--data_folder", default='/data/Dataset/VOC2012', type=str, help="dataset folder")
 parser.add_argument("--list_folder", default='datasets/voc', type=str, help="train/val/test list file")
 parser.add_argument("--num_classes", default=21, type=int, help="number of classes")
 parser.add_argument("--crop_size", default=448, type=int, help="crop_size in training")
