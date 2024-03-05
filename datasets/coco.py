@@ -1,15 +1,11 @@
 import numpy as np
-
-import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset
 import os
 import imageio
 from . import transforms
-import torchvision
 from PIL import Image
 from torchvision import transforms as T
-import random
 
 class_list = ['_background_', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
 
@@ -41,13 +37,6 @@ class CocoDataset(Dataset):
         self.img_dir = img_dir
         self.label_dir = label_dir
         self.stage = stage
-        # if "val" in split:
-        #     self.img_dir = os.path.join(img_dir, 'val2014')
-        #     self.label_dir = os.path.join(label_dir, 'val')
-        # elif "train" in split:
-        #     self.img_dir = os.path.join(img_dir, 'train2014')
-        #     self.label_dir = os.path.join(label_dir, 'train')
-
         self.name_list_dir = os.path.join(name_list_dir, split + '.txt')
         self.name_list = load_img_name_list(self.name_list_dir)
 
@@ -59,16 +48,18 @@ class CocoDataset(Dataset):
         
 
         if self.stage == "train":
-            img_name = os.path.join(self.img_dir, "train2014", _img_name+'.jpg')
+            img_name = os.path.join(self.img_dir, "train", _img_name+'.jpg')
             image = np.asarray(robust_read_image(img_name))
-            label_dir = os.path.join(self.label_dir, "train2014", _img_name+'.png')
+            label_dir = os.path.join(self.label_dir, "train", _img_name[15:]+'.png')
             label = np.asarray(imageio.imread(label_dir))
 
         elif self.stage == "val":
-            img_name = os.path.join(self.img_dir, "val2014", _img_name+'.jpg')
+            img_name = os.path.join(self.img_dir, "val", _img_name+'.jpg')
             image = np.asarray(robust_read_image(img_name))
-            label_dir = os.path.join(self.label_dir, "val2014", _img_name+'.png')
-            label = np.asarray(imageio.imread(label_dir))
+            label_dir = os.path.join(self.label_dir, "val", _img_name[13:]+'.png')
+            # label = np.asarray(imageio.imread(label_dir))
+            label = np.asarray(Image.open(label_dir))
+
 
         elif self.stage == "test":
             label = image[:,:,0]
@@ -125,10 +116,6 @@ class CocoClsDataset(CocoDataset):
         ])
         
         self.global_view1 = T.Compose([
-            # T.RandomResizedCrop(224, scale=[0.4, 1], interpolation=Image.BICUBIC),
-            self.flip_and_color_jitter,
-            self.gaussian_blur(p=1.0),
-            # self.normalize,
         ])
         self.global_view2 = T.Compose([
             T.RandomResizedCrop(self.crop_size, scale=[0.4, 1], interpolation=Image.BICUBIC),
@@ -190,18 +177,22 @@ class CocoClsDataset(CocoDataset):
 
         cls_label = self.label_list[img_name]
 
+        # co-occurence is -1 while one cls is saved
+        label_idx = np.zeros(1,)
+        if cls_label.sum(-1) != 0:
+            label_idx = np.where(cls_label.sum(-1)>1,-1,np.argmax(cls_label,axis=-1)+1)
+        else:
+            label_idx = np.array([-1])
+
         if self.aug:
 
-            crops = []
-            crops.append(image)
-            crops.append(self.global_view2(pil_image))
-            crops.append(local_image)
-            # for _ in range(8):
-            #     crops.append(self.local_view(pil_image))
+            raw_image = image
+            w_image = self.global_view2(pil_image)
+            s_image = local_image
 
-            return img_name, image, cls_label, img_box, crops
+            return img_name, image, cls_label,label_idx, img_box, raw_image, w_image, s_image
         else:
-            return img_name, image, cls_label
+            return img_name, image, cls_label,label_idx
 
 
 class CocoSegDataset(CocoDataset):
