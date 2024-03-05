@@ -75,10 +75,10 @@ We incorporate a regularization loss for segmentation. Please refer to the instr
 ## Train SeCo
 ``` bash
 ### train voc
-bash run_voc.sh scripts/train_voc.py [master_port] [gpu_device] train_voc
+bash run_train.sh scripts/train_voc.py [gpu_number] [master_port] [gpu_device] train_voc
 
 ### train coco
-bash run_coco.sh scripts/train_coco.py [master_port] [gpu_devices] train_coco
+bash run_train.sh scripts/train_coco.py [gpu_numbers] [master_port] [gpu_devices] train_coco
 ```
 
 ## Evaluate SeCo
@@ -87,7 +87,7 @@ bash run_coco.sh scripts/train_coco.py [master_port] [gpu_devices] train_coco
 bash run_evaluate_seg_voc.sh tools/infer_seg_voc.py [gpu_device] [checkpoint_path]
 
 ### eval coco
-bash run_evaluate_seg_voc.sh tools/infer_seg_coco.py [gpu_device] [checkpoint_path]
+bash run_evaluate_seg_voc.sh tools/infer_seg_coco.py [gpu_number] [master_port] [gpu_device] [checkpoint_path]
 ```
 
 ## Main Results
@@ -109,7 +109,7 @@ Please cite our work if you find it helpful to your reseach. :two_hearts:
 ```
 
 
-If you have any question, please feel free to contact the author by zwyang21@m.fudan.edu.cn.
+If you have any questions, please feel free to contact the author by zwyang21@m.fudan.edu.cn.
 
 ## Acknowledgement
 This repo is built upon [ToCo](https://github.com/rulixiang/ToCo), [DINO](https://github.com/facebookresearch/dino), and [SupCon](https://github.com/HobbitLong/SupContrast.git). Many thanks to their brilliant works!!!
