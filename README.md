@@ -87,7 +87,7 @@ bash run_train.sh scripts/train_coco.py [gpu_numbers] [master_port] [gpu_devices
 bash run_evaluate_seg_voc.sh tools/infer_seg_voc.py [gpu_device] [checkpoint_path]
 
 ### eval coco
-bash run_evaluate_seg_voc.sh tools/infer_seg_coco.py [gpu_number] [master_port] [gpu_device] [checkpoint_path]
+bash run_evaluate_seg_coco.sh tools/infer_seg_coco.py [gpu_number] [master_port] [gpu_device] [checkpoint_path]
 ```
 
 ## Main Results
