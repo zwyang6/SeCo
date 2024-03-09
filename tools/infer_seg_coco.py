@@ -29,8 +29,8 @@ parser.add_argument("--scales", default=[1.0,1.25,1.5], help="multi_scales for s
 parser.add_argument("--backbone", default='vit_base_patch16_224', type=str, help="vit_base_patch16_224")
 parser.add_argument("--pretrained", default=True, type=bool, help="use imagenet pretrained weights")
 
-parser.add_argument("--img_folder", default='/data/ziqing/Jaye_Files/Dataset/MSCOCO/JPEGImages', type=str, help="dataset folder")
-parser.add_argument("--label_folder", default='/data/ziqing/Jaye_Files/Dataset/MSCOCO/SegmentationClass', type=str, help="dataset folder")
+parser.add_argument("--img_folder", default='/data/MSCOCO/JPEGImages', type=str, help="dataset folder")
+parser.add_argument("--label_folder", default='/data/MSCOCO/SegmentationClass', type=str, help="dataset folder")
 parser.add_argument("--num_classes", default=81, type=int, help="number of classes")
 parser.add_argument("--ignore_index", default=255, type=int, help="random index")
 
@@ -55,11 +55,12 @@ parser.add_argument('--backend', default='nccl')
 
 
 
-def _validate(model=None, data_loader=None, args=None):
+def _validate(pid, model=None, dataset=None, args=None):
 
     model.eval()
+    data_loader = DataLoader(dataset[pid], batch_size=1, shuffle=False, num_workers=2, pin_memory=False)
 
-    with torch.no_grad(), torch.cuda.device(0):
+    with torch.no_grad():
         model.cuda()
 
         gts, seg_pred = [], []
@@ -91,12 +92,11 @@ def _validate(model=None, data_loader=None, args=None):
 
             np.save(args.logits_dir + "/" + name[0] + '.npy', {"msc_seg":seg.cpu().numpy()})
 
-    seg_score = evaluate.scores(gts, seg_pred)
+    seg_score = evaluate.scores(gts, seg_pred, num_classes=81)
     logging.info('raw_seg_score:')
-    metrics_tab = format_tabs_multi_metircs([seg_score], ["confusion","precision","recall",'iou'], cat_list=voc.class_list)
+    metrics_tab = format_tabs_multi_metircs([seg_score], ["confusion","precision","recall",'iou'], cat_list=coco.class_list)
     logging.info("\n"+metrics_tab)
 
-    
     return seg_score
 
 
@@ -159,7 +159,7 @@ def crf_proc():
 
     crf_score = evaluate.scores(gts, preds)
     logging.info('crf_seg_score:')
-    metrics_tab_crf = format_tabs_multi_metircs([crf_score], ["confusion","precision","recall",'iou'], cat_list=voc.class_list)
+    metrics_tab_crf = format_tabs_multi_metircs([crf_score], ["confusion","precision","recall",'iou'], cat_list=coco.class_list)
     logging.info("\n"+ metrics_tab_crf)
 
     return crf_score
