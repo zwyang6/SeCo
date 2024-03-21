@@ -1,14 +1,12 @@
 # [CVPR2024] Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation
-
+[![arXiv](https://img.shields.io/badge/arXiv-2303.02506-b31b1b.svg)](http://arxiv.org/abs/2402.18467)
 We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. 
 
 ## News
 
-* **If you find this work helpful, please give us a :star2: to receive the updation !**
-* **` Feb. 29th, 2024`:** We released our paper on [arXiv](http://arxiv.org/abs/2402.18467). Please refer to it for more details.
-  
-* **` Mar. 1st, 2024`:**  Code is available now.
-* **` Mar. 2st, 2024`:**  Logs and weights are available now.
+* **If you find this work helpful, don't hesitate to give us a :star2: !**
+* **` Mar. 21st, 2024`:** All Codes, logs, and checkpoints are available now🔥🔥🔥
+* If you have any questions, please feel free to leave issues or contact us by zwyang21@m.fudan.edu.cn.
 
 ## Overview
 
@@ -108,8 +106,6 @@ Please cite our work if you find it helpful to your reseach. :two_hearts:
 }
 ```
 
-
-If you have any questions, please feel free to contact the author by zwyang21@m.fudan.edu.cn.
 
 ## Acknowledgement
 This repo is built upon [ToCo](https://github.com/rulixiang/ToCo), [DINO](https://github.com/facebookresearch/dino), and [SupCon](https://github.com/HobbitLong/SupContrast.git). Many thanks to their brilliant works!!!
