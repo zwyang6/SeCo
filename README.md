@@ -1,7 +1,6 @@
 # [CVPR2024] Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation
 [![arXiv](https://img.shields.io/badge/arXiv-2303.02506-b31b1b.svg)](http://arxiv.org/abs/2402.18467)
 
-We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. 
 
 ## News
 
@@ -10,12 +9,10 @@ We proposed a Separate and Conquer philosophy to effectively tackle the co-occur
 * If you have any questions, please feel free to leave issues or contact us by zwyang21@m.fudan.edu.cn.
 
 ## Overview
-
+We proposed a Separate and Conquer philosophy to effectively tackle the co-occurrence issue in WSSS. 
 <p align="middle">
 <img src="/sources/main_fig.png" alt="SeCo pipeline" width="1200px">
 </p>
-
-Weakly supervised semantic segmentation (WSSS) with image-level labels aims to achieve segmentation tasks without dense annotations. However, attributed to the frequent coupling of co-occurring objects and the limited supervision from image-level labels, the challenging co-occurrence problem is widely present and leads to false activation of objects in WSSS. In this work, we devise a 'Separate and Conquer' scheme SeCo to tackle this issue from dimensions of image space and feature space. In the image space, we propose to 'separate' the co-occurring objects with image decomposition by subdividing images into patches. Importantly, we assign each patch a category tag from Class Activation Maps (CAMs), which spatially helps remove the co-context bias and guide the subsequent representation. In the feature space, we propose to 'conquer' the false activation by enhancing semantic representation with multi-granularity knowledge contrast. To this end, a dual-teacher-single-student architecture is designed and tag-guided contrast is conducted, which guarantee the correctness of knowledge and further facilitate the discrepancy among co-contexts. We streamline the multi-staged WSSS pipeline end-to-end and tackle this issue without external supervision. Extensive experiments are conducted, validating the efficiency of our method and the superiority over previous single-staged and even multi-staged competitors on PASCAL VOC and MS COCO.
 
 
 ## Data Preparation
