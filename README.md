@@ -1,5 +1,4 @@
-# [CVPR2024] Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation
-[![arXiv](https://img.shields.io/badge/arXiv-2303.02506-b31b1b.svg)](http://arxiv.org/abs/2402.18467)
+# [CVPR2024] Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation [![arXiv](https://img.shields.io/badge/arXiv-2303.02506-b31b1b.svg)](http://arxiv.org/abs/2402.18467)
 
 
 ## News
