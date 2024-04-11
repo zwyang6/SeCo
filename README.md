@@ -89,7 +89,7 @@ bash run_evaluate_seg_coco.sh tools/infer_seg_coco.py [gpu_number] [master_port]
 Semantic performance on VOC and COCO. Logs and weights are available now.
 | Dataset | Backbone |  Val  | Test | Log | Weight |
 |:-------:|:--------:|:-----:|:----:|:---:|:------:|
-|   PASCAL VOC   |   ViT-B  | 74.0  | 73.8 | [log](logs/voc_train.log) | [weight](https://drive.google.com/file/d/1m5Yezcs1EPUuyJq1U_W0WuyPNj2Me4wT/view?usp=sharing)       |
+|   PASCAL VOC   |   ViT-B  | 74.0  | [73.8](http://host.robots.ox.ac.uk/eval/view_submission/37835/) | [log](logs/voc_train.log) | [weight](https://drive.google.com/file/d/1m5Yezcs1EPUuyJq1U_W0WuyPNj2Me4wT/view?usp=sharing)       |
 |   MS COCO  |   ViT-B  |  46.7 |   -  | [log](logs/coco_train.log) | [weight](https://drive.google.com/file/d/1XpazzVBmSMwFsa7ei_Av22PGKA7pq7V0/view?usp=sharing)       |
 
 ## Citation 
