@@ -134,6 +134,8 @@ def crf_proc():
 
         image_name = os.path.join(images_path, name + ".jpg")
         image = imageio.imread(image_name).astype(np.float32)
+        if len(image.shape)<3:
+            image = np.stack((image, image, image), axis=-1)
         label_name = os.path.join(labels_path, name + ".png")
         if "test" in args.infer_set:
             label = image[:,:,0]
