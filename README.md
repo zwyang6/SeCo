@@ -95,11 +95,13 @@ Semantic performance on VOC and COCO. Logs and weights are available now.
 ## Citation 
 Please cite our work if you find it helpful to your reseach. :two_hearts:
 ```bash
-@article{yang2024separate,
-  title={Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation},
-  author={Yang, Zhiwei and Fu, Kexue and Duan, Minghong and Qu, Linhao and Wang, Shuo and Song, Zhijian},
-  journal={arXiv preprint arXiv:2402.18467},
-  year={2024}
+@InProceedings{Yang_2024_CVPR,
+    author    = {Yang, Zhiwei and Fu, Kexue and Duan, Minghong and Qu, Linhao and Wang, Shuo and Song, Zhijian},
+    title     = {Separate and Conquer: Decoupling Co-occurrence via Decomposition and Representation for Weakly Supervised Semantic Segmentation},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {3606-3615}
 }
 ```
 
