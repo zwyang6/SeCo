@@ -221,3 +221,11 @@ def _refine_cams(ref_mod, images, cams, valid_key, orig_size):
     refined_label = valid_key[refined_label]
 
     return refined_label
+
+def get_valid_cam(cam, cls_label):
+    b, c, h, w = cam.shape
+    #pseudo_label = torch.zeros((b,h,w))
+    cls_label_rep = cls_label.unsqueeze(-1).unsqueeze(-1).repeat([1,1,h,w])
+    valid_cam = cls_label_rep * cam
+
+    return valid_cam
